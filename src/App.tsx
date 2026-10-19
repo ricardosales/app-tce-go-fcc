@@ -15,6 +15,7 @@ import { ThemeMode } from './components/ThemeSelector';
 import { CompletedSessionItem, EnrichedLesson } from './types';
 import { SYLLABUS } from './data/syllabus';
 import { STUDY_CONTENT } from './data/studyContent';
+import { DRIVE_PDF_REFERENCES } from './data/drivePdfReferences';
 
 export default function App() {
   const service = StudyService.getInstance();
@@ -53,6 +54,7 @@ export default function App() {
 
   const handleStartCurriculumTopic = (subjectName: string, subjectId: string, title: string, topicId: string) => {
     const lesson = STUDY_CONTENT[topicId];
+    const references = lesson?.references ?? [];
     service.setCurrentTopic({
       id: topicId,
       syllabusTopicId: topicId,
@@ -70,7 +72,12 @@ export default function App() {
       summary: lesson?.summary || `Assunto previsto no conteúdo programático do TCE-GO B02: ${title}. Ainda não há aula cadastrada para este assunto. Use suas anotações e consulte as referências do edital.`,
       lessonSections: lesson?.lessonSections,
       example: lesson?.example,
-      references: lesson?.references,
+      references: [
+        ...references,
+        ...(DRIVE_PDF_REFERENCES[topicId] ?? []).filter(
+          (pdf) => !references.some((reference) => reference.url === pdf.url),
+        ),
+      ],
       quickQuestions: lesson?.quickQuestions || [],
     });
     refreshState();
