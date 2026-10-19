@@ -45,7 +45,7 @@ export class AudioSummaryController {
         await TextToSpeech.speak({
           text,
           lang: 'pt-BR',
-          rate: 1,
+          rate: 1.5,
           pitch: 1,
           volume: 1,
           category: 'playback',
@@ -69,7 +69,7 @@ export class AudioSummaryController {
     speech.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'pt-BR';
-    utterance.rate = 1;
+    utterance.rate = 1.5;
 
     const voices = speech.getVoices();
     const portugueseVoice = voices.find((voice) => voice.lang.toLocaleLowerCase().startsWith('pt'));
