@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">RevisaAI</string>
+    <string name="title_activity_main">RevisaAI</string>
+    <string name="package_name">com.revisaai.app</string>
+    <string name="custom_url_scheme">com.revisaai.app</string>
+</resources>
