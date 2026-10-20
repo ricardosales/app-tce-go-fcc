@@ -14,18 +14,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenProfile,
 }) => {
   return (
-    <header className="fixed top-0 left-0 right-0 max-w-md mx-auto w-full z-40 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe">
-      <div className="flex flex-col h-28">
-        {/* Status Bar */}
-        {!Capacitor.isNativePlatform() && <div className="flex items-center justify-between px-4 h-7 text-on-surface-variant font-label-code text-[11px] select-none">
-          <span>09:41</span>
-          <div className="flex items-center gap-1.5 text-on-surface-variant">
-            <span className="material-symbols-outlined text-[15px]">signal_cellular_alt</span>
-            <span className="material-symbols-outlined text-[15px]">wifi</span>
-            <span className="material-symbols-outlined text-[16px]">battery_full</span>
-          </div>
-        </div>}
-
+    <header className="fixed top-0 left-0 right-0 max-w-2xl mx-auto w-full z-40 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe">
+      <div className={`flex items-center ${Capacitor.isNativePlatform() ? 'h-28' : 'h-20'}`}>
         {/* App Bar */}
         <div className="flex items-center justify-between px-4 flex-1">
           {/* Logo & Edital Title */}

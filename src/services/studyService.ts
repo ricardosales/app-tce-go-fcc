@@ -17,12 +17,14 @@ import {
   RESCUE_FLASHCARDS,
 } from '../data/mockData';
 import { SYLLABUS } from '../data/syllabus';
+import { STUDY_CONTENT } from '../data/studyContent';
 
 export interface AppStoreState {
   profileName: string;
   enrichedLessons: Record<string, EnrichedLesson>;
   stats: UserStats;
   currentHeroTopic: TopicItem;
+  homeSuggestedTopic: TopicItem | null;
   reviewQueue: ReviewQueueItem[];
   upcomingCycles: ReviewQueueItem[];
   completedSessions: CompletedSessionItem[];
@@ -61,14 +63,29 @@ export class StudyService {
         const savedState = JSON.parse(saved) as AppStoreState;
         const migratedStats = { ...INITIAL_USER_STATS, ...savedState.stats };
         if (!Array.isArray(savedState.completedTodayTopicIds)) migratedStats.metaDailyDone = 0;
+        const completedTopicIds = Array.isArray(savedState.completedTopicIds) ? savedState.completedTopicIds : [];
+        const currentHeroTopic = savedState.currentHeroTopic || { ...TCE_GO_HERO_TOPIC };
+        const hasSavedHomeSuggestion = Object.prototype.hasOwnProperty.call(savedState, 'homeSuggestedTopic');
+        const savedHomeSuggestion = savedState.homeSuggestedTopic;
+        const legacySuggestionId = currentHeroTopic.syllabusTopicId;
+        const homeSuggestedTopic = hasSavedHomeSuggestion
+          ? savedHomeSuggestion && !completedTopicIds.includes(savedHomeSuggestion.syllabusTopicId || savedHomeSuggestion.id)
+            ? savedHomeSuggestion
+            : savedHomeSuggestion === null
+              ? null
+              : this.findNextPendingTopic(savedHomeSuggestion?.syllabusTopicId || savedHomeSuggestion?.id || legacySuggestionId || currentHeroTopic.id, completedTopicIds)
+          : legacySuggestionId && !completedTopicIds.includes(legacySuggestionId)
+            ? currentHeroTopic
+            : this.findNextPendingTopic(legacySuggestionId || currentHeroTopic.id, completedTopicIds);
         return {
           ...this.createInitialState(),
           ...savedState,
           profileName: typeof savedState.profileName === 'string' ? savedState.profileName.trim() : '',
           enrichedLessons: savedState.enrichedLessons || {},
           stats: migratedStats,
-          currentHeroTopic: savedState.currentHeroTopic || { ...TCE_GO_HERO_TOPIC },
-          completedTopicIds: savedState.completedTopicIds || [],
+          currentHeroTopic,
+          homeSuggestedTopic,
+          completedTopicIds,
           completedTodayTopicIds: savedState.completedTodayTopicIds || [],
           topicNotes: savedState.topicNotes || {},
           activityDate: savedState.activityDate || dateKey(new Date()),
@@ -88,6 +105,7 @@ export class StudyService {
       enrichedLessons: {},
       stats: { ...INITIAL_USER_STATS },
       currentHeroTopic: { ...TCE_GO_HERO_TOPIC },
+      homeSuggestedTopic: { ...TCE_GO_HERO_TOPIC },
       reviewQueue: [...INITIAL_REVIEWS],
       upcomingCycles: [...INITIAL_UPCOMING_CYCLES],
       completedSessions: [...INITIAL_COMPLETED_SESSIONS],
@@ -99,6 +117,44 @@ export class StudyService {
       activityDate: dateKey(new Date()),
       lastStudiedDate: null,
     };
+  }
+
+  private findNextPendingTopic(afterTopicId: string, completedTopicIds: string[]): TopicItem | null {
+    const topics = SYLLABUS.flatMap((subject) =>
+      subject.topics.map((title, index) => {
+        const syllabusTopicId = `${subject.id}-${index}`;
+        const lesson = STUDY_CONTENT[syllabusTopicId];
+        return {
+          id: syllabusTopicId,
+          syllabusTopicId,
+          subjectId: subject.id,
+          subjectName: subject.name,
+          moduleCode: 'Conteúdo Programático · TCE-GO B02',
+          title,
+          subtitle: lesson ? 'Aula de estudo · material autoral com referências' : 'Assunto do edital verticalizado · aula em preparação',
+          banca: 'FCC',
+          estimatedMinutes: 60,
+          flashcardCount: 0,
+          testCount: 0,
+          incidenceRate: 'Conteúdo previsto no edital oficial',
+          audioDuration: '—',
+          summary: lesson?.summary || `Assunto previsto no conteúdo programático do TCE-GO B02: ${title}. Ainda não há aula cadastrada para este assunto. Use suas anotações e consulte as referências do edital.`,
+          lessonSections: lesson?.lessonSections,
+          example: lesson?.example,
+          references: lesson?.references,
+          quickQuestions: lesson?.quickQuestions || [],
+        } satisfies TopicItem;
+      }),
+    );
+    if (topics.length === 0) return null;
+
+    const currentIndex = topics.findIndex((topic) => topic.syllabusTopicId === afterTopicId);
+    const startIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % topics.length;
+    for (let offset = 0; offset < topics.length; offset += 1) {
+      const topic = topics[(startIndex + offset) % topics.length];
+      if (!completedTopicIds.includes(topic.id)) return topic;
+    }
+    return null;
   }
 
   public saveState(): void {
@@ -255,6 +311,7 @@ export class StudyService {
     if (this.state.currentHeroTopic.syllabusTopicId && !this.state.completedTopicIds.includes(this.state.currentHeroTopic.syllabusTopicId)) {
       this.state.completedTopicIds.push(this.state.currentHeroTopic.syllabusTopicId);
     }
+    this.state.homeSuggestedTopic = this.findNextPendingTopic(dailyTopicId, this.state.completedTopicIds);
     this.state.stats.editalProgressCurrent = this.state.completedTopicIds.length;
     this.state.subjects = this.state.subjects.map((subject) => {
       if (subject.id !== this.state.currentHeroTopic.subjectId) return subject;

@@ -4,10 +4,10 @@ import { TopicItem, ReviewQueueItem, CompletedSessionItem, UserStats } from '../
 interface ScreenHojeProps {
   profileName: string;
   stats: UserStats;
-  heroTopic: TopicItem;
+  heroTopic: TopicItem | null;
   reviewQueue: ReviewQueueItem[];
   completedSessions: CompletedSessionItem[];
-  onStartStudy: () => void;
+  onStartStudy: (topic: TopicItem) => void;
   onReviewItem: (id: string) => void;
   onViewCompleted: (item: CompletedSessionItem) => void;
 }
@@ -40,7 +40,7 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
   const remainingTopics = Math.max(0, stats.metaDailyTotal - stats.metaDailyDone);
   const remainingText = remainingTopics > 0
     ? `Faltam ${remainingTopics} ${remainingTopics === 1 ? 'tópico' : 'tópicos'}`
-    : 'Meta diária concluída!';
+    : 'Meta diária concluída — continue no seu ritmo!';
 
   return (
     <div className="flex flex-col w-full space-y-4">
@@ -62,8 +62,12 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
             <span className="text-xl animate-bounce">👋</span>
           </div>
           <p className="text-[13px] text-on-surface-variant mt-0.5">
-            Seu próximo tópico é <span className="text-primary font-semibold">{heroTopic.subjectName}</span> e há{' '}
-            <span className="text-on-surface font-semibold">{reviewQueue.length} revisões</span> para hoje.
+            {heroTopic ? (
+              <>Seu próximo tópico é <span className="text-primary font-semibold">{heroTopic.subjectName}</span> e há{' '}
+                <span className="text-on-surface font-semibold">{reviewQueue.length} revisões</span> para hoje.</>
+            ) : (
+              <>Você concluiu todos os tópicos disponíveis e há <span className="text-on-surface font-semibold">{reviewQueue.length} revisões</span> para hoje.</>
+            )}
           </p>
         </div>
         <div className="flex flex-col items-end shrink-0">
@@ -126,6 +130,7 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
       </div>
 
       {/* META DO DIA - CONTEÚDO NOVO (Card Hero / Destaque) */}
+      {heroTopic ? (
       <div className="relative bg-surface-container-lowest rounded-2xl p-4 shadow-md border border-slate-100 overflow-hidden flex flex-col gap-3">
         {/* Glow effect */}
         <div className="absolute top-0 right-0 w-44 h-44 bg-gradient-to-bl from-primary/10 via-primary/5 to-transparent rounded-full -mr-16 -mt-16 pointer-events-none"></div>
@@ -209,13 +214,22 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
 
         {/* Botão Primário */}
         <button
-          onClick={onStartStudy}
+          onClick={() => onStartStudy(heroTopic)}
           className="w-full h-12 py-3 px-6 bg-primary hover:bg-primary-container text-on-primary text-[15px] font-semibold rounded-full shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-1 cursor-pointer"
         >
             <span>Abrir tópico de estudo</span>
           <span className="material-symbols-outlined text-[19px]">arrow_forward</span>
         </button>
       </div>
+      ) : (
+        <div className="bg-surface-container-lowest rounded-2xl p-5 text-center shadow-sm border border-slate-100">
+          <span className="material-symbols-outlined text-secondary text-[32px]">task_alt</span>
+          <h2 className="text-[16px] text-on-surface font-bold mt-2">Todos os tópicos foram concluídos</h2>
+          <p className="text-[12px] text-on-surface-variant mt-1">
+            Não há outro tópico pendente no edital. Você ainda pode revisar os conteúdos já estudados.
+          </p>
+        </div>
+      )}
 
       {/* FILA DE REVISÕES DE HOJE (Repetição Espaçada SRS) */}
       <div className="flex flex-col space-y-3 pt-1">

@@ -12,7 +12,7 @@ import { ModalProfileAndEdital } from './components/ModalProfileAndEdital';
 import { ModalWelcome } from './components/ModalWelcome';
 import { ModalPacing } from './components/ModalPacing';
 import { ThemeMode } from './components/ThemeSelector';
-import { CompletedSessionItem, EnrichedLesson } from './types';
+import { CompletedSessionItem, EnrichedLesson, TopicItem } from './types';
 import { SYLLABUS } from './data/syllabus';
 import { STUDY_CONTENT } from './data/studyContent';
 import { DRIVE_PDF_REFERENCES } from './data/drivePdfReferences';
@@ -34,9 +34,7 @@ export default function App() {
   const [isPacingOpen, setIsPacingOpen] = useState(false);
   const [inspectedSession, setInspectedSession] = useState<CompletedSessionItem | null>(null);
 
-  // View mode: mobile frame simulation vs responsive full width
   const isNativeApp = Capacitor.isNativePlatform();
-  const [viewMode, setViewMode] = useState<'mobile' | 'expanded'>(() => isNativeApp ? 'expanded' : 'mobile');
 
   // Synchronize state
   const refreshState = () => {
@@ -48,7 +46,9 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab]);
 
-  const handleStartStudy = () => {
+  const handleStartStudy = (topic: TopicItem) => {
+    service.setCurrentTopic(topic);
+    refreshState();
     setActiveTab('estudo');
   };
 
@@ -134,58 +134,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-start text-on-surface selection:bg-primary-fixed">
-      {/* Top Bar with View Mode Toggle and Edital Quick Switcher */}
-      {!isNativeApp && <div className="w-full bg-white border-b border-slate-200 py-2 px-4 flex items-center justify-between text-xs text-on-surface-variant z-50 shadow-xs">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 font-bold text-primary">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            <span>RevisaAI</span>
-          </div>
-          <span className="hidden sm:inline text-slate-300">|</span>
-          <span className="hidden sm:inline">
-            TCE-GO B02 • Plano de Estudos
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Mobile Shell vs Full Width View Toggle */}
-          <button
-            onClick={() => setViewMode(viewMode === 'mobile' ? 'expanded' : 'mobile')}
-            className="flex items-center gap-1 px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-md text-on-surface-variant font-medium transition-colors cursor-pointer"
-            title="Alternar entre Visualização Mobile e Expandida"
-          >
-            <span className="material-symbols-outlined text-[15px]">
-              {viewMode === 'mobile' ? 'aspect_ratio' : 'smartphone'}
-            </span>
-            <span className="hidden sm:inline">
-              {viewMode === 'mobile' ? 'Expandir' : 'Modo Mobile'}
-            </span>
-          </button>
-        </div>
-      </div>}
-
-      {/* Main Container */}
-      <div
-        className={`w-full transition-all duration-300 flex justify-center ${
-          isNativeApp ? 'py-0 px-0' : viewMode === 'mobile' ? 'py-4 sm:py-6 px-2' : 'py-2 px-4 max-w-2xl'
-        }`}
-      >
+      <div className="w-full flex justify-center">
         <div
-          className={`w-full bg-surface relative flex flex-col min-h-screen ${
-            isNativeApp
-              ? 'w-full'
-              : viewMode === 'mobile'
-              ? 'max-w-md rounded-[38px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] border-[7px] border-slate-900/95 overflow-hidden'
-              : 'rounded-2xl shadow-sm border border-slate-200'
-          }`}
+          className="w-full max-w-2xl bg-surface relative flex flex-col min-h-screen"
         >
-          {/* Dynamic Island / Notch Simulation in Mobile Mode */}
-          {!isNativeApp && viewMode === 'mobile' && (
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-slate-900 rounded-full z-50 pointer-events-none flex items-center justify-end pr-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-slate-800 border border-slate-700/60"></div>
-            </div>
-          )}
-
           {/* Header */}
           <Header
             streakDays={appState.stats.streakDays}
@@ -196,13 +148,17 @@ export default function App() {
           {/* Main Scrollable Screen Content */}
           <main
             className="flex flex-col relative w-full px-4 pt-30 pb-32 bg-surface flex-grow min-h-[750px]"
-            style={{ paddingTop: 'calc(7rem + env(safe-area-inset-top, 0px) + 1rem)' }}
+            style={{
+              paddingTop: isNativeApp
+                ? 'calc(7rem + env(safe-area-inset-top, 0px) + 1rem)'
+                : 'calc(5rem + env(safe-area-inset-top, 0px) + 1rem)',
+            }}
           >
             {activeTab === 'hoje' && (
               <ScreenHoje
                 profileName={appState.profileName}
                 stats={appState.stats}
-                heroTopic={appState.currentHeroTopic}
+                heroTopic={appState.homeSuggestedTopic}
                 reviewQueue={appState.reviewQueue}
                 completedSessions={appState.completedSessions}
                 onStartStudy={handleStartStudy}
