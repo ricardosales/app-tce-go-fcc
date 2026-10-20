@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from 'react';
+import { Browser } from '@capacitor/browser';
 import { SYLLABUS } from '../data/syllabus';
+import { EXTERNAL_QUESTION_LINKS } from '../data/externalQuestionLinks';
 import { STUDY_CONTENT, STUDY_CONTENT_COUNT } from '../data/studyContent';
 
 interface ScreenEditalProps {
@@ -9,7 +11,8 @@ interface ScreenEditalProps {
 
 export const ScreenEdital: React.FC<ScreenEditalProps> = ({ completedTopicIds, onStartTopic }) => {
   const [search, setSearch] = useState('');
-  const [openSubject, setOpenSubject] = useState<string | null>('portugues');
+  const [openSubject, setOpenSubject] = useState<string | null>(null);
+  const [questionLinkError, setQuestionLinkError] = useState<string | null>(null);
   const query = search.trim().toLocaleLowerCase('pt-BR');
   const filteredSubjects = useMemo(() => SYLLABUS.map((subject) => ({
     ...subject,
@@ -19,6 +22,12 @@ export const ScreenEdital: React.FC<ScreenEditalProps> = ({ completedTopicIds, o
   const totalTopics = SYLLABUS.reduce((n, subject) => n + subject.topics.length, 0);
   const lessonCount = STUDY_CONTENT_COUNT;
   const doneCount = completedTopicIds.length;
+  const openQuestionLink = (url: string) => {
+    setQuestionLinkError(null);
+    void Browser.open({ url }).catch(() => {
+      setQuestionLinkError('Não foi possível abrir o link de questões. Tente novamente.');
+    });
+  };
 
   return (
     <section className="flex flex-col gap-4 pb-8">
@@ -42,17 +51,26 @@ export const ScreenEdital: React.FC<ScreenEditalProps> = ({ completedTopicIds, o
         <span className="material-symbols-outlined text-[18px] text-on-surface-variant">search</span>
         <input aria-label="Buscar assunto do edital" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar disciplina ou assunto" className="w-full bg-transparent text-[13px] outline-none" />
       </label>
+      {questionLinkError && <p role="alert" className="text-[11px] text-error">{questionLinkError}</p>}
 
       <div className="flex flex-col gap-2">
         {filteredSubjects.map((subject) => {
           const complete = subject.topics.filter(({ id }) => completedTopicIds.includes(id)).length;
           const expanded = query.length > 0 || openSubject === subject.id;
+          const questionLink = EXTERNAL_QUESTION_LINKS[subject.id];
           return <div key={subject.id} className="overflow-hidden rounded-2xl border border-slate-100 bg-surface-container-lowest shadow-sm">
-            <button onClick={() => setOpenSubject(expanded && !query ? null : subject.id)} className="flex w-full items-center justify-between gap-3 p-3.5 text-left">
-              <span className="min-w-0"><span className="block text-[13px] font-bold text-on-surface">{subject.name}</span>
-                <span className="text-[10px] text-on-surface-variant">{subject.group === 'geral' ? 'Conhecimentos gerais · peso 1' : 'Conhecimentos específicos · peso 2'} · {complete}/{subject.topics.length} assuntos</span></span>
-              <span className="material-symbols-outlined text-primary">{expanded ? 'expand_less' : 'expand_more'}</span>
-            </button>
+            <div className="flex items-center gap-2 p-3.5">
+              <button type="button" onClick={() => setOpenSubject(expanded && !query ? null : subject.id)} className="min-w-0 flex-1 text-left">
+                <span className="min-w-0"><span className="block text-[13px] font-bold text-on-surface">{subject.name}</span>
+                  <span className="text-[10px] text-on-surface-variant">{subject.group === 'geral' ? 'Conhecimentos gerais · peso 1' : 'Conhecimentos específicos · peso 2'} · {complete}/{subject.topics.length} assuntos</span></span>
+              </button>
+              {questionLink && <button type="button" onClick={() => openQuestionLink(questionLink)} aria-label={`Abrir questões de ${subject.name}`} title="Abrir questões" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-primary hover:bg-surface-container-high">
+                <span className="material-symbols-outlined text-[19px]">open_in_new</span>
+              </button>}
+              <button type="button" onClick={() => setOpenSubject(expanded && !query ? null : subject.id)} aria-label={`${expanded ? 'Recolher' : 'Expandir'} ${subject.name}`} className="flex h-9 w-9 shrink-0 items-center justify-center text-primary">
+                <span className="material-symbols-outlined">{expanded ? 'expand_less' : 'expand_more'}</span>
+              </button>
+            </div>
             {expanded && <div className="border-t border-slate-100 px-3 pb-2">
               {subject.topics.map(({ title, id }) => {
                 const isDone = completedTopicIds.includes(id);
