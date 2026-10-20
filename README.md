@@ -11,6 +11,14 @@ npm install
 npm run dev
 ```
 
+### Progressive Web App
+
+O build web pode ser instalado como aplicativo em navegadores compatíveis. Publique em HTTPS e acesse o endereço pelo navegador para usar a opção **Instalar aplicativo** ou **Adicionar à Tela de Início**. Depois da primeira abertura online, a interface e os arquivos locais principais ficam disponíveis offline; recursos que dependem da internet, como a pesquisa Gemini, continuam exigindo conexão.
+
+```sh
+npm run build
+```
+
 ## Android
 
 Requisitos: Android Studio com Android SDK instalado. O Android Studio inclui o JDK adequado para o build do Capacitor.
