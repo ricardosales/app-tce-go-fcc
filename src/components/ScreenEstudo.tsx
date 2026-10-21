@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import { EnrichedLesson, TopicItem } from '../types';
 import { AudioSummaryController } from '../utils/audioPlayer';
+import { MarkdownContent } from './MarkdownContent';
 
 interface ScreenEstudoProps {
   topic: TopicItem;
@@ -310,18 +311,21 @@ Retorne somente JSON com este formato: {"summary":"resumo objetivo, mas didátic
           </span>
         </div>
 
-        <p className="text-[15px] text-on-surface leading-7">
-          {topic.summary}
-        </p>
-
-        {topic.lessonSections?.map((section) => (
-          <div key={section.heading} className="space-y-1">
-            <h2 className="text-[15px] font-bold text-on-surface">{section.heading}</h2>
-            <p className="text-[14px] leading-6 text-on-surface-variant">{section.body}</p>
-          </div>
-        ))}
-
-        {topic.example && <div className="rounded-xl bg-primary-fixed/40 p-3 text-[14px] leading-6 text-on-surface"><strong>Exemplo prático:</strong> {topic.example}</div>}
+        {topic.markdownContent ? (
+          <MarkdownContent source={topic.markdownContent} />
+        ) : (
+          <>
+            <p className="text-[15px] text-on-surface leading-7">{topic.summary}</p>
+            {topic.lessonSections?.map((section) => (
+              <div key={section.heading} className="space-y-2">
+                <h2 className="text-[15px] font-bold text-on-surface">{section.heading}</h2>
+                <p className="whitespace-pre-line text-[14px] leading-6 text-on-surface-variant">{section.body}</p>
+                {section.code && <pre className="overflow-x-auto rounded-xl bg-slate-950 p-3 text-[12px] leading-5 text-slate-100"><code>{section.code}</code></pre>}
+              </div>
+            ))}
+            {topic.example && <div className="rounded-xl bg-primary-fixed/40 p-3 text-[14px] leading-6 text-on-surface"><strong>Exemplo prático:</strong> {topic.example}</div>}
+          </>
+        )}
 
         {topic.references && topic.references.length > 0 && <div className="space-y-1 border-t border-slate-100 pt-2">
           <h2 className="text-[11px] font-bold text-primary">Referências para consulta</h2>

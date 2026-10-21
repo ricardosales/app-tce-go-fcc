@@ -70,6 +70,7 @@ export default function App() {
       incidenceRate: 'Conteúdo previsto no edital oficial',
       audioDuration: '—',
       summary: lesson?.summary || `Assunto previsto no conteúdo programático do TCE-GO B02: ${title}. Ainda não há aula cadastrada para este assunto. Use suas anotações e consulte as referências do edital.`,
+      markdownContent: lesson?.markdownContent,
       lessonSections: lesson?.lessonSections,
       example: lesson?.example,
       references: [

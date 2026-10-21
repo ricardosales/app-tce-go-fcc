@@ -64,9 +64,11 @@ export class StudyService {
         const migratedStats = { ...INITIAL_USER_STATS, ...savedState.stats };
         if (!Array.isArray(savedState.completedTodayTopicIds)) migratedStats.metaDailyDone = 0;
         const completedTopicIds = Array.isArray(savedState.completedTopicIds) ? savedState.completedTopicIds : [];
-        const currentHeroTopic = savedState.currentHeroTopic || { ...TCE_GO_HERO_TOPIC };
+        const currentHeroTopic = this.refreshSavedTopic(savedState.currentHeroTopic || { ...TCE_GO_HERO_TOPIC });
         const hasSavedHomeSuggestion = Object.prototype.hasOwnProperty.call(savedState, 'homeSuggestedTopic');
-        const savedHomeSuggestion = savedState.homeSuggestedTopic;
+        const savedHomeSuggestion = savedState.homeSuggestedTopic
+          ? this.refreshSavedTopic(savedState.homeSuggestedTopic)
+          : savedState.homeSuggestedTopic;
         const legacySuggestionId = currentHeroTopic.syllabusTopicId;
         const homeSuggestedTopic = hasSavedHomeSuggestion
           ? savedHomeSuggestion && !completedTopicIds.includes(savedHomeSuggestion.syllabusTopicId || savedHomeSuggestion.id)
@@ -97,6 +99,23 @@ export class StudyService {
     }
 
     return this.createInitialState();
+  }
+
+  /** Refresh persisted lesson text after an app content update, preserving user progress and metadata. */
+  private refreshSavedTopic(topic: TopicItem): TopicItem {
+    const topicId = topic.syllabusTopicId || topic.id;
+    const lesson = STUDY_CONTENT[topicId];
+    if (!lesson) return topic;
+    const references = [...(lesson.references ?? []), ...(topic.references ?? [])];
+    return {
+      ...topic,
+      summary: lesson.summary,
+      markdownContent: lesson.markdownContent,
+      lessonSections: lesson.lessonSections,
+      example: lesson.example,
+      quickQuestions: lesson.quickQuestions ?? topic.quickQuestions,
+      references: references.filter((item, index) => references.findIndex((candidate) => candidate.url === item.url) === index),
+    };
   }
 
   private createInitialState(): AppStoreState {
@@ -139,6 +158,7 @@ export class StudyService {
           incidenceRate: 'Conteúdo previsto no edital oficial',
           audioDuration: '—',
           summary: lesson?.summary || `Assunto previsto no conteúdo programático do TCE-GO B02: ${title}. Ainda não há aula cadastrada para este assunto. Use suas anotações e consulte as referências do edital.`,
+          markdownContent: lesson?.markdownContent,
           lessonSections: lesson?.lessonSections,
           example: lesson?.example,
           references: lesson?.references,

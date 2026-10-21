@@ -87,7 +87,211 @@ const mathDetails = [
   'Para testar validade, procure contraexemplo: premissas verdadeiras com conclusão falsa invalidam a inferência. Uma forma válida pode conter premissas factualmente falsas; isso afeta a solidez, não a validade lógica.',
 ];
 
+const ptClassroom = [
+  [
+    'Clareza responde “o que preciso comunicar?”; concisão remove excessos; precisão evita termos vagos; impessoalidade mantém foco institucional. Esses atributos trabalham juntos. Um texto curto que omite prazo ou providência pode ser conciso na aparência e inadequado na função.',
+    'Antes de escrever, defina destinatário, objetivo e ação esperada. Organize a informação do pedido para a justificativa ou vice-versa conforme a finalidade. Use vocabulário conhecido, identifique responsáveis quando necessário e revise datas, anexos, nomes e encaminhamentos.',
+    'A formalidade atual não exige fórmulas antiquadas. Prefira “Solicito o envio do relatório até 15 de maio” a “Venho por meio deste solicitar, se possível...”. A primeira frase é direta e ainda respeitosa. Clareza institucional não significa frieza nem falta de cortesia.',
+  ],
+  [
+    'A sílaba tônica distingue oxítona (última), paroxítona (penúltima) e proparoxítona (antepenúltima). Só depois verifique terminação e regra. “Público” é proparoxítona; “também” é oxítona terminada em -em; “fácil” é paroxítona terminada em -l.',
+    'Para hiato, examine se i ou u tônico forma sílaba sozinho ou com s, como em “saída” e “país”, observadas as condições da regra. Ditongos e encontros vocálicos precisam ser classificados pela pronúncia e pela norma ortográfica, não pela aparência da palavra.',
+    'Não confunda acento gráfico com tonicidade: toda palavra tem sílaba tônica, mas nem toda recebe acento. Em revisão, pronuncie, separe em sílabas e classifique. Confira também grafias que diferem por uso ou mudança ortográfica; pronúncia regional não decide a grafia oficial.',
+  ],
+  [
+    'A crase representa a contração de duas ocorrências de “a”: a preposição exigida pela oração e o artigo feminino ou demonstrativo iniciado por “a”. Diagnostique cada lado separadamente. Se o verbo não rege a preposição, a palavra feminina sozinha não cria crase.',
+    'Teste a regência trocando o termo feminino por masculino: “entregou o documento ao diretor” indica preposição mais artigo; “entregou à diretora” recebe crase. Já “entregou a ela” tem preposição, mas o pronome não aceita artigo. O teste orienta, mas a regência vem primeiro.',
+    'Antes de verbo (“começou a estudar”) e diante de masculino (“a prazo”), não ocorre crase no padrão usual. Em nomes de lugar, experimente “voltar da/de”: “voltei da Bahia, fui à Bahia”; “voltei de Goiás, fui a Goiás”. Locuções femininas podem levar crase mesmo sem o teste do masculino.',
+  ],
+  [
+    'Compreensão recupera o que o texto afirma expressamente; inferência combina pistas autorizadas; extrapolação acrescenta algo que não decorre delas. Para cada alternativa, localize o trecho-base e pergunte se a conclusão mantém o mesmo alcance, agente, tempo e grau de certeza.',
+    'Se o texto afirma que uma iniciativa reduziu custos, mas aumentou o prazo, uma opção que diga “melhorou a eficiência em todos os aspectos” extrapola. O conectivo “mas” sinaliza contraste e impede apagar a ressalva. Uma paráfrase correta preserva a relação entre os dois resultados.',
+    'Desconfie de quantificadores absolutos — “todo”, “nunca”, “somente” — quando o texto é mais limitado. Eles não são automaticamente falsos: precisam ser comprovados. Não escolha alternativa por conhecimento de mundo se o comando exige resposta com base no texto.',
+  ],
+  [
+    'O contexto inclui época, situação, público, gênero e propósito comunicativo. Ele ajuda a interpretar referências e escolhas lexicais, mas a leitura deve combinar contexto com marcas linguísticas. Separe o que o texto efetivamente diz do que você sabe sobre o tema.',
+    'Uma palavra como “reforma” pode designar mudança administrativa, obra física ou alteração normativa. Título, gênero e frases vizinhas delimitam a leitura. O mesmo argumento pode ter função diferente em relatório técnico, notícia, artigo de opinião ou peça publicitária.',
+    'Evite projetar sobre o texto uma intenção que não aparece em evidências. Ao justificar uma resposta, aponte a expressão que apoia a inferência e explique o papel do contexto. Contextualizar não é substituir leitura por pesquisa externa nem supor que todo autor compartilha a mesma posição.',
+  ],
+  [
+    'Denotação é o sentido mais literal ou convencional no contexto; conotação mobiliza sentidos associados, figurados ou avaliativos. A classificação depende do uso, não de uma lista fixa de palavras. “Raiz” pode ser parte de uma planta ou origem de um problema.',
+    'Em “a equipe abriu a porta”, porta tende a ser objeto físico; em “o projeto abriu portas”, a expressão sugere oportunidades. Para decidir, substitua a expressão por uma paráfrase contextual: “criou oportunidades” preserva o segundo sentido, mas não o primeiro.',
+    'Ironia exige contraste entre a formulação e a intenção indicada pelo contexto; não basta uma frase parecer elogiosa. Expressão idiomática também pode ter sentido convencional não composicional. Em prova, explique o efeito da escolha lexical, não apenas rotule-a como literal ou figurada.',
+  ],
+  [
+    'No discurso direto, preserva-se a fala como enunciado da personagem, marcada por aspas, travessão ou recurso equivalente. No indireto, o narrador integra o conteúdo com “que”, “se” ou outro introdutor. Pessoa, tempo verbal e expressões de lugar e tempo podem mudar.',
+    '“Ela disse: ‘Voltarei amanhã’” passa a “Ela disse que voltaria no dia seguinte” quando o ponto de referência está no passado. Se o relato ocorre no mesmo dia, “amanhã” pode continuar adequado. A conversão depende do novo centro de referência, não de uma troca mecânica.',
+    'No indireto livre, a narração incorpora palavras, dúvidas ou avaliação da personagem sem marcador explícito. Identifique a voz pelo vocabulário, pelo contexto e pelo ponto de vista. Não confunda ausência de aspas com ausência de fala representada.',
+  ],
+  [
+    'Intertextualidade é o diálogo entre textos; pode ser explícita, como uma citação, ou sugerida por título, estrutura, expressão conhecida ou tema. Citação reproduz uma fonte; paráfrase a reformula; paródia retoma e transforma, muitas vezes com efeito crítico ou humorístico.',
+    'Metáfora aproxima campos de sentido sem conectivo comparativo (“a informação é combustível”); metonímia troca termos por relação de contiguidade (“li Machado”, isto é, a obra). Personificação atribui ação ou característica humana a ser não humano (“a cidade acordou”).',
+    'Identificar o nome da figura é etapa inicial. A questão pode pedir o efeito: intensificar crítica, criar humor, condensar argumento ou construir imagem. Uma mesma expressão pode combinar recursos; escolha a classificação que explica melhor a relação destacada no enunciado.',
+  ],
+  [
+    'Morfologia classifica a palavra conforme sua forma e seu comportamento; sintaxe identifica a função que ela exerce na oração. Em “o relatório técnico chegou”, “técnico” é adjetivo e adjunto adnominal. A primeira resposta nomeia a classe; a segunda descreve a relação sintática.',
+    'A forma não determina sempre a classe: “o jantar atrasou” usa “jantar” como substantivo; “vamos jantar” usa-o como verbo. Para analisar, veja determinantes, flexão e posição, mas confirme pelo sentido e pelas relações da oração.',
+    'Não confunda sujeito com agente: em “o relatório foi publicado”, “o relatório” é sujeito paciente. Também não confunda classe com função: pronome pode exercer função de sujeito, objeto ou complemento. Faça duas perguntas separadas: “que classe é?” e “que papel exerce aqui?”.',
+  ],
+  [
+    'Derivação parte de uma base: prefixação acrescenta elemento antes; sufixação, depois; parassíntese associa prefixo e sufixo na formação; regressão reduz forma; conversão muda classe sem alteração formal relevante. Composição combina bases por justaposição ou aglutinação.',
+    'Em “infelizmente”, reconheça a base “feliz”, o prefixo “in-” e o sufixo “-mente”. Em “passatempo”, há duas bases. Para parassíntese, teste se as formas intermediárias correspondentes existem com o sentido pertinente; a presença simultânea de prefixo e sufixo, sozinha, não prova o processo.',
+    'Aglutinação pode apagar ou alterar sons na junção; justaposição mantém as bases mais reconhecíveis. O significado do vocábulo resultante pode especializar-se. Ao responder, identifique base e afixos e explique o processo, em vez de classificar apenas pela quantidade de partes visíveis.',
+  ],
+  [
+    'Sinonímia é relação de proximidade semântica; antonímia, de oposição em uma dimensão. Raramente há equivalência total: duas palavras podem diferir em intensidade, formalidade, regência, frequência ou combinação com outras palavras.',
+    '“Iniciar” e “começar” aproximam-se, mas confira se o complemento e o registro continuam naturais. “Economizar” e “poupar” podem ser próximos em um contexto, enquanto “econômico” e “poupado” não substituem automaticamente todas as formas relacionadas.',
+    'Para testar equivalência, substitua no enunciado completo e releia a frase. Verifique se muda avaliação, agente, grau ou pressuposto. Antônimos também dependem do eixo: “quente/frio” descreve temperatura; “caro/barato”, preço; não trate oposição como propriedade universal fora do contexto.',
+  ],
+  [
+    'Pontuação organiza a estrutura e orienta a leitura. Vírgulas podem marcar enumeração, deslocamento, vocativo, aposto ou oração explicativa; ponto e vírgula separa segmentos relacionados; dois-pontos introduzem explicação, citação ou lista. A escolha deve refletir a construção e o sentido.',
+    'Em “Os dados, após validação, foram publicados”, o trecho intercalado pode ser retirado sem desfazer a relação entre sujeito e verbo. Sem intercalação, não separe sujeito e predicado (“Os dados foram publicados”), nem verbo e complemento (“A equipe analisou os dados”).',
+    'A pausa da fala não basta para justificar vírgula. Compare orações coordenadas e subordinadas e observe se o conectivo integra a construção. Uma vírgula pode mudar escopo ou transformar uma oração restritiva em explicativa; confira o significado antes de aceitar a pontuação.',
+  ],
+  [
+    'Pronomes pessoais, demonstrativos, possessivos e relativos retomam ou acompanham referentes. Um pronome relativo introduz oração e exerce função nela; “que” pode retomar antecedente, e a preposição antes dele depende da regência (“o tema de que tratamos”).',
+    'Próclise é a colocação antes do verbo; ênclise, depois; mesóclise, no interior da forma verbal em registros e condições específicos. Palavras negativas e certos subordinadores atraem pronome átono: “não se divulgaram os dados”. A colocação também considera início de oração e locuções verbais.',
+    'Pronome de tratamento dirige-se formalmente ao interlocutor, mas exige concordância gramatical na terceira pessoa: “Vossa Senhoria encaminhará seu relatório”. Confira também a quem pertencem pronomes possessivos e demonstrativos para evitar ambiguidade de referência.',
+  ],
+  [
+    'Concordância nominal relaciona artigos, adjetivos, numerais e pronomes ao substantivo; concordância verbal relaciona o verbo ao sujeito. Localize o núcleo de cada grupo e só então ajuste gênero, número e pessoa. Termos intercalados podem afastar os elementos sem mudar a relação.',
+    'Em “A maioria dos relatórios foi publicada”, a concordância pode ser feita com o núcleo singular “maioria”; em “A maioria dos relatórios foram publicados”, pode ocorrer concordância com o termo plural conforme a construção admitida. A interpretação e a forma escolhida precisam manter coerência.',
+    'Com “se”, diferencie passiva sintética (“publicam-se relatórios”, sujeito paciente plural) de índice de indeterminação (“precisa-se de analistas”, verbo no singular). Em sujeito composto, posição, reciprocidade e conjunção podem afetar a concordância; não decida pela palavra mais próxima sem analisar a estrutura.',
+  ],
+  [
+    'Flexão nominal pode indicar gênero e número; flexão verbal envolve pessoa, número, tempo, modo e, em certas análises, voz. Reconheça a terminação e consulte o contexto: a mesma forma pode corresponder a pessoas diferentes em tempos ou modos distintos.',
+    'Em “analisávamos”, a terminação aponta primeira pessoa do plural e pretérito imperfeito do indicativo: ação passada vista em curso, habitual ou não delimitada. O tempo verbal situa o evento; o aspecto descreve como ele se desenvolve; o modo expressa o enquadramento do enunciador.',
+    'Indicativo costuma apresentar conteúdo como fato; subjuntivo aparece em hipótese, desejo, possibilidade ou avaliação; imperativo expressa ordem, pedido ou orientação. Não classifique apenas pela tradução isolada: subordinadores e correlação entre orações ajudam a identificar o valor.',
+  ],
+  [
+    'Na voz ativa, o sujeito é normalmente agente ou fonte da ação; na passiva, o sujeito recebe ou sofre a ação; na reflexiva, o sujeito participa como agente e paciente ou há reciprocidade. Transformar a voz muda a organização informacional, não necessariamente o evento descrito.',
+    'Ativa: “A equipe publicou o relatório”. Passiva analítica: “O relatório foi publicado pela equipe”. O objeto direto da ativa torna-se sujeito paciente; o agente pode aparecer em complemento ou ser omitido. Ajuste o particípio ao novo sujeito em gênero e número.',
+    'A passiva sintética usa “se” apassivador e verbo que admite objeto direto: “publicaram-se os resultados”. Compare com “precisa-se de analistas”: o verbo exige preposição e o “se” indetermina o sujeito, ficando na terceira pessoa singular. A transitividade resolve a análise.',
+  ],
+  [
+    'Tempo verbal situa o evento em relação ao momento de referência; modo indica como o enunciador apresenta a situação. A correlação entre orações mantém compatibilidade, mas há mais de uma sequência correta, conforme hipótese, anterioridade, simultaneidade ou posterioridade.',
+    '“Se o sistema estivesse atualizado, reduziria o risco” apresenta condição hipotética: imperfeito do subjuntivo na oração condicional e futuro do pretérito na principal. Já “se estiver atualizado, reduzirá o risco” formula condição possível com outra perspectiva temporal.',
+    'Evite decorar pares sem interpretar a relação. Em reescrita, verifique se a mudança de tempo altera certeza, duração ou possibilidade. A sequência correta depende do sentido global, dos marcadores temporais e do enquadramento da hipótese.',
+  ],
+  [
+    'Regência é a relação entre um termo e seu complemento; alguns verbos e nomes selecionam preposição, outros não. O sentido pode alterar a construção: “assistir ao filme” (ver) e “assistir o paciente” (prestar assistência) têm regências diferentes no padrão formal.',
+    'A crase pode surgir quando a regência exige “a” e o complemento admite artigo feminino: “obedecer às normas”. Com pronome relativo, preserve a preposição: “a norma a que obedecemos”. Primeiro identifique o sentido e o complemento; depois examine a forma exigida.',
+    'Não transfira regência de uma palavra para outra por semelhança. Consulte a construção do padrão culto e teste substituições com cuidado. Em questões, a troca de verbo ou nome pode exigir ajuste de preposição, pronome relativo e crase ao mesmo tempo.',
+  ],
+  [
+    'Coordenação liga unidades sintaticamente independentes; subordinação estabelece dependência de uma unidade em relação a outra. Conjunções podem adicionar, opor, alternar, explicar ou concluir; subordinadores podem indicar causa, condição, concessão, finalidade, consequência ou tempo.',
+    '“Embora chovesse, a equipe saiu” admite um fato que não impediu a saída: concessão. “A equipe saiu porque a reunião terminou” apresenta causa. “A reunião terminou, portanto a equipe saiu” marca conclusão. As relações lógicas ajudam a verificar se a substituição preserva o argumento.',
+    'Conectivos semelhantes podem ter efeitos diferentes: “mas” opõe; “portanto” conclui; “porque” explica ou causa, conforme a construção. Em reescrita, leia as duas proposições e pergunte como uma se relaciona à outra antes de escolher o conectivo.',
+  ],
+  [
+    'Uma frase pode ser gramatical e ainda falhar em clareza, coesão, paralelismo ou adequação. Revise primeiro a estrutura sintática, depois as referências e conectivos e, por fim, a precisão vocabular. O comando pode pedir somente correção gramatical ou também manutenção do sentido.',
+    'Em uma lista, formas paralelas facilitam leitura: “planejar, executar e avaliar” usa infinitivos; “planejamento, execução e avaliação” usa substantivos. Misturar categorias sem motivo pode quebrar paralelismo, embora cada palavra, isoladamente, esteja correta.',
+    'Ao comparar alternativas, localize a mudança e teste consequência por consequência: concordância, regência, pontuação, antecedente pronominal, escopo e foco. Uma frase pode corrigir um erro e introduzir outro; a avaliação deve considerar o enunciado inteiro.',
+  ],
+  [
+    'Equivalência textual exige preservar a proposição relevante, embora a forma possa mudar. Voz passiva, deslocamento de termos, nominalização e substituição de conectivos são possíveis se mantêm agente, paciente, tempo, polaridade, quantificadores e relações lógicas pertinentes.',
+    '“A comissão aprovou o plano” e “O plano foi aprovado pela comissão” descrevem o mesmo evento básico, mas a segunda põe o plano em destaque. Se o contexto enfatiza quem tomou a decisão, a mudança de foco pode ser relevante mesmo com conteúdo central preservado.',
+    'Negação, “apenas”, “todos”, “alguns”, condição e causa são pontos sensíveis. Compare o que cada frase inclui e exclui. Semelhança de palavras não garante equivalência: “pode” não equivale a “deve”, e “se” não equivale a “quando”.',
+  ],
+];
+
+const mathClassroom = [
+  [
+    'Na expressão −3 + 2×5, calcule primeiro 2×5 e depois some o oposto: −3+10=7. Em parênteses, respeite a ordem interna. A regra operacional é a mesma para inteiros e racionais, mas frações exigem denominador não nulo e cuidado com sinais.',
+    'Subtrair um número equivale a adicionar seu oposto: 8−(−3)=8+3=11. Na multiplicação, sinais iguais dão produto positivo e sinais diferentes, negativo. Escreva uma linha por transformação para localizar erro, especialmente quando há sinal negativo fora de parênteses.',
+    'Cheque o resultado estimando sua ordem de grandeza e substituindo a expressão original. Divisão por zero não é definida. Uma fração pode representar decimal finito ou periódico; mantenha forma exata até o fim quando arredondamento não foi solicitado.',
+  ],
+  [
+    'Para fatorar, decomponha os números em primos. MDC(12,18): 12=2²·3; 18=2·3²; fatores comuns nos menores expoentes dão 6. MMC usa todos os fatores nos maiores expoentes: 2²·3²=36. Essa regra decorre da divisibilidade pelos números originais.',
+    'Se o problema pergunta o maior tamanho de grupos iguais sem sobra, investigue MDC. Se pergunta quando ciclos com períodos diferentes coincidem, investigue MMC. Exemplo: alarmes a cada 6 e 8 minutos tocam juntos novamente após MMC(6,8)=24 minutos.',
+    'Confirme se a resposta atende à unidade e à pergunta: MMC é um múltiplo comum mínimo positivo; MDC é divisor comum máximo. Em problemas com mais de dois valores, fatoração evita tentativas dispersas. Não escolha apenas pela palavra “comum”; interprete o que está sendo agrupado ou sincronizado.',
+  ],
+  [
+    'Para somar 2/3 e 1/4, use denominador comum: 8/12+3/12=11/12. Multiplicar não exige denominador comum: 2/3×3/5=6/15=2/5. Dividir por 3/5 equivale a multiplicar por 5/3. Reduza a fração sem alterar seu valor.',
+    'Compare frações por denominador comum ou produto cruzado, respeitando denominadores positivos no teste usual. Número misto deve ser convertido corretamente: 1 2/3 = 5/3. Para problemas de parte de quantidade, multiplique a fração pela quantidade e mantenha a unidade.',
+    'Um erro frequente é somar numeradores e denominadores diretamente: 1/2+1/3 não é 2/5. Verifique o resultado: 1/2+1/3 deve ser maior que 1/2 e menor que 1. O intervalo plausível denuncia alguns erros sem repetir toda a conta.',
+  ],
+  [
+    'Razão compara grandezas na ordem dada: 60 registros para 3 servidores é 60/3=20 registros por servidor, durante o período especificado. Proporção compara duas razões. Em a/b=c/d, a multiplicação cruzada resulta de multiplicar ambos os lados por bd, com b e d não nulos.',
+    'Mantenha unidade e ordem: quilômetros por hora é distância/tempo; horas por quilômetro é o inverso. Uma tabela com pares correspondentes ajuda a reconhecer escala. Se dobrar uma grandeza dobra a outra, a relação pode ser direta; ainda confirme que as condições permanecem iguais.',
+    'A multiplicação cruzada não identifica sozinha se o problema é proporcional. Ela apenas resolve uma igualdade de razões já justificada. Compare unidades, contexto e variações antes de montar a proporção; dados não proporcionais não devem ser forçados em regra de três.',
+  ],
+  [
+    'Ao dividir 120 na razão 1:2:3, a soma dos pesos é 6; cada parte vale 120/6=20, então as parcelas são 20, 40 e 60. Na regra de três, mantenha grandezas na mesma linha e classifique a relação como direta ou inversa antes de calcular.',
+    'Se 4 máquinas concluem um lote em 6 horas, 8 máquinas podem levar 3 horas sob produtividade constante: dobrou a quantidade de máquinas e o tempo caiu pela metade. Na relação direta, mais unidades de um lado implicam mais do outro na mesma proporção.',
+    'Faça o teste de sentido: se mais trabalhadores realizam o mesmo serviço, o prazo tende a cair; isso é inverso. Mas se aumentam trabalhadores e quantidade de serviço, o resultado depende das duas variáveis. Verifique se o total repartido recompõe o original e se a regra supõe produtividade constante.',
+  ],
+  [
+    'Converta p% para fator multiplicativo. Aumentar 10% corresponde a multiplicar por 1,10; descontar 10%, por 0,90. Sobre R$ 200, desconto de 10% resulta em R$ 180. Para descobrir a taxa, compare a variação com a base original, não com o valor final.',
+    'Aumento de 10% seguido de redução de 10% dá 1,10×0,90=0,99: o valor final é 99% da base, portanto há redução líquida de 1%. Reduções sucessivas de 20% e 10% produzem fator 0,8×0,9=0,72, desconto total de 28%.',
+    'Pergunte “percentual de qual base?”. Uma variação percentual pode parecer diferente quando a base muda. Em enunciados com preço inicial, reajuste, desconto e preço final, nomeie cada valor e escreva a operação antes de calcular. Arredonde só se o comando pedir.',
+  ],
+  [
+    'Transforme cada pista em uma relação formal: “Ana não é a primeira” elimina uma posição; “Bruno está antes de Caio” restringe a ordem relativa. Faça uma tabela com pessoas e posições e marque tanto possibilidades quanto impossibilidades para evitar redescobrir a mesma dedução.',
+    'Resolva pistas mais restritivas primeiro: posições fixas, vizinhança, extremos e relações de ordem. Se houver alternativas, teste cada uma contra todas as pistas. Um cenário que satisfaz quatro condições mas viola a quinta não é solução parcial válida.',
+    'Não deduza mais do que as pistas permitem. Às vezes há múltiplas configurações possíveis, e o enunciado pergunta apenas algo que permanece invariável entre elas. Diferencie “pode ser” de “tem de ser” e procure contraexemplo antes de afirmar necessidade.',
+  ],
+  [
+    'Em “se P, então Q”, P é condição suficiente para Q, e Q é necessária para P. A condicional é falsa apenas se P for verdadeira e Q falsa. Sua contrapositiva “se não Q, então não P” é equivalente; a conversa “se Q, então P” não é garantida.',
+    'De P→Q e P, conclui-se Q (modus ponens). De P→Q e ¬Q, conclui-se ¬P (modus tollens). De ¬P concluir ¬Q é negar o antecedente e é inválido; de Q concluir P é afirmar o consequente e também é inválido.',
+    'Para refutar uma inferência inválida, escolha P falsa e Q verdadeira: a condicional P→Q fica verdadeira, mas Q não prova P. Para negações quantificadas, “não é verdade que todos” equivale a “existe ao menos um que não”; “não existe nenhum” equivale a “todos não”.',
+  ],
+  [
+    'Calcule diferenças consecutivas: em 2, 5, 8, 11, cada passo soma 3, então o próximo termo é 14. Se a primeira diferença variar, examine diferenças de segunda ordem, alternância de duas sequências, multiplicação e soma combinadas, ou padrões de posições pares e ímpares.',
+    'Uma regra deve explicar todos os termos conhecidos e prever o seguinte. Em uma sequência numérica, confira pelo menos duas transições; em sequência de letras, converta posições no alfabeto e observe reinício ou saltos. A regra mais simples é preferível quando o enunciado não dá pista adicional.',
+    'Uma quantidade finita de termos pode ser explicada por diversas regras; por isso, não invente padrão sofisticado sem necessidade. Considere alternativas e convenções do problema. Se a questão for verbal ou visual, procure também classificação, analogia, rotação ou alternância em vez de apenas operação aritmética.',
+  ],
+  [
+    'Fixe o referencial do agente e registre a direção atual. Voltado ao norte, virar à direita leva ao leste; outra direita leva ao sul. Deslocamento e orientação são coisas distintas: caminhar para trás pode mudar a posição sem mudar para onde o agente está olhando.',
+    'Em problemas temporais, desenhe linha do tempo e separe horário, duração e intervalo. “Duas horas depois” indica deslocamento temporal; “a cada duas horas” indica repetição periódica. Ao atravessar meia-noite ou mudar dia, atualize a data além do relógio.',
+    'Não use direita/esquerda da página quando a referência é o personagem. Anote cada rotação na ordem e só depois aplique o deslocamento. Para verificar, descreva o estado final em palavras e reproduza mentalmente o percurso desde a posição inicial.',
+  ],
+  [
+    'Validade é propriedade da forma do argumento: não pode haver premissas verdadeiras e conclusão falsa ao mesmo tempo. Solidez exige validade e premissas verdadeiras. Portanto, argumento válido pode partir de premissas falsas; argumento persuasivo ou com conclusão verdadeira não é automaticamente válido.',
+    '“Todos os A são B; x é A; logo x é B” é válido. Se todos os servidores são robôs e Ana é servidora fossem premissas falsas, a forma continuaria válida, embora o argumento não fosse sólido. Avalie primeiro a ligação lógica e depois a verdade factual.',
+    'Busque um contraexemplo: atribua valores que tornem as premissas verdadeiras e a conclusão falsa. Se conseguir, a inferência é inválida. Em questões de hipóteses, não acrescente informação do mundo real que não foi dada; trabalhe com as premissas do enunciado.',
+  ],
+];
+
+const ptSecondExamples = [
+  'Imagine um ofício que comunica prazo para entrega de documento. Primeiro explicite providência, responsável e data; depois acrescente fundamento necessário. Corte fórmulas vazias, mas preserve informação útil. Se a reescrita omitir destinatário ou prazo, ficou menor, porém não mais clara. O teste é saber se o leitor consegue agir sem pedir esclarecimento.',
+  'Classifique “também”: a sílaba tônica é “bém”, portanto a palavra é oxítona e recebe acento por terminar em -em. Compare “fácil”: tônica em “fá”, paroxítona terminada em -l. Em ambos os casos a grafia depende da classe e da regra, não de a palavra parecer “forte”.',
+  'Compare “referiu-se a normas” e “referiu-se às normas”: a regência de referir-se pede preposição a; com artigo plural as, ocorre contração às. Trocando por masculino, “aos regulamentos”, o teste confirma. Se o verbo não pedisse a preposição, artigo feminino sozinho não produziria crase.',
+  'Texto: “A ferramenta reduziu o tempo de consulta, embora tenha exigido treinamento inicial”. Inferência sustentada: houve ganho de tempo e custo de adaptação. Não se sustenta dizer que a ferramenta melhorou todos os aspectos. A concessiva embora preserva uma ressalva que alternativas absolutas frequentemente apagam.',
+  'Leia um texto sobre implantação digital com data, órgão autor e público. O contexto permite entender por que “acesso” é relevante, mas a conclusão da questão precisa continuar apoiada nas frases. Se uma alternativa atribui ao autor uma crítica que não aparece no texto, contexto externo não a torna correta.',
+  'Em “a equipe abriu portas para novos serviços”, substitua por “criou oportunidades”: a interpretação continua coerente, logo “portas” é figurado. Em “abriu a porta da sala”, a substituição não funciona. Faça o teste da paráfrase sem perder o contexto inteiro.',
+  'Converta “João disse: ‘Entregarei o relatório amanhã’” para uma narração posterior: João disse que entregaria o relatório no dia seguinte. Mudam pessoa, tempo e referência temporal. Se a fala for relatada no próprio dia da emissão, “amanhã” pode permanecer; o contexto decide.',
+  'Em “Li Clarice Lispector no fim de semana”, normalmente lemos a autora pela obra: metonímia. Se um texto conhecido é retomado para criticá-lo por humor e inversão, há paródia. Identificar a figura serve para explicar a relação e o efeito, não para substituir a interpretação.',
+  'Em “Os servidores experientes analisaram os dados”, “experientes” é adjetivo (classe) e adjunto adnominal (função). Em “Os servidores são experientes”, continua adjetivo, mas funciona como predicativo do sujeito. A classe permaneceu; a função mudou com a estrutura.',
+  '“Infelizmente” parte de “feliz” e recebe prefixo e sufixo; “passatempo” combina bases. Para avaliar parassíntese, verifique as formas intermediárias correspondentes e o sentido, não conte afixos mecanicamente. A análise de formação pode ajudar a perceber classe e significado, mas não os determina sempre sem contexto.',
+  'Substitua “iniciar a reunião” por “começar a reunião”: ambas preservam ideia e regência nesse contexto. Em frase formal, “dar início à reunião” muda a estrutura e exige crase. A proximidade semântica não garante mesma construção sintática; teste o período inteiro.',
+  'Em “O diretor, após consulta à equipe, publicou a decisão”, a vírgula isola intercalação. Retire-a e leia “O diretor publicou a decisão”: sujeito e verbo permanecem juntos. Já “O diretor, publicou a decisão” separa sujeito e predicado sem justificativa sintática.',
+  'Em “A pesquisadora de que falei chegou”, o relativo retoma pesquisadora e a preposição de é exigida por “falar de”. Em “Vossa Senhoria enviará seu parecer”, o tratamento se refere ao interlocutor, mas o verbo permanece na terceira pessoa. A função deve ser analisada no enunciado.',
+  'Compare “A maioria dos relatórios foi publicada” e “Os relatórios foram publicados”. No primeiro, o núcleo “maioria” permite concordância singular; em construções partitivas pode haver concordância pelo termo plural conforme a norma. Em “publicam-se relatórios”, o substantivo é sujeito paciente; “precisa-se de analistas” não tem esse sujeito.',
+  'Em “Quando analisávamos os dados, recebemos a atualização”, “analisávamos” situa atividade em curso ou habitual no passado; “recebemos” apresenta evento delimitado. A terminação ajuda a classificar, mas o contraste temporal se entende pela relação entre as orações.',
+  'Transforme “A equipe revisou as normas” em “As normas foram revisadas pela equipe”. O objeto direto vira sujeito paciente e particípio concorda no feminino plural. Para passiva sintética, “revisaram-se as normas”. Já “precisa-se de normas” usa verbo preposicionado e sujeito indeterminado.',
+  '“Se a equipe revisasse o sistema, reduziria falhas” formula hipótese; “se revisar, reduzirá” apresenta condição possível futura. As terminações mudam porque muda o enquadramento. A questão pode aceitar mais de uma correlação, desde que preservados tempo, possibilidade e relação lógica.',
+  '“Assistir ao filme” (ver) pede preposição a; “assistir o paciente” (prestar assistência) usa objeto direto no padrão culto. Assim, a crase não é propriedade do substantivo “filme” ou “norma”: depende da regência e da presença de artigo no complemento.',
+  'Compare “Embora haja risco, o controle foi aprovado” (concessão) com “Como havia risco, o controle foi reforçado” (causa). Substituir embora por porque altera a lógica. Para avaliar conectivo, reescreva a relação em palavras simples e confira se o argumento permanece.',
+  'Revise “A equipe planejou, a execução e avaliou os resultados”. A enumeração mistura formas sem paralelismo. “Planejou, executou e avaliou” harmoniza verbos; “planejamento, execução e avaliação” harmoniza substantivos. Depois confira se a correção preserva tempo e sentido da frase.',
+  '“A comissão aprovou apenas o plano” restringe o objeto; “Apenas a comissão aprovou o plano” restringe o agente. O deslocamento altera escopo. Ao converter ativa em passiva, a proposição central pode permanecer, mas o foco muda; avalie posição de “apenas”, negação e quantificadores.',
+];
+
+const mathSecondExamples = [
+  'Resolva −8 + 3×4: primeiro 3×4=12; depois −8+12=4. Se havia parênteses, resolva-os antes. Uma calculadora que recebe expressão sem a ordem correta pode mascarar o raciocínio; registre cada etapa e confira se o sinal do produto está correto.',
+  'Para organizar 24 livros e 36 cadernos em maior número de kits idênticos sem sobras, use MDC(24,36)=12: cada kit recebe 2 livros e 3 cadernos. Se dois alertas tocam em períodos de 6 e 8 minutos, use MMC=24 para a próxima coincidência.',
+  'Calcule 3/4−1/6: MMC dos denominadores é 12; 9/12−2/12=7/12. Multiplicar 3/4×1/6, ao contrário, dá 3/24=1/8. Faça uma estimativa: a diferença deve ficar entre 1/2 e 3/4, o que ajuda a detectar uma resposta impossível.',
+  'Uma equipe processa 60 itens com 3 servidores: 20 itens por servidor no período observado. Se a equipe e o período forem equivalentes, essa razão pode apoiar uma estimativa proporcional. Preserve unidades e não inverta para servidores por item sem ajustar a pergunta.',
+  'Divida R$ 600 em razão 2:3:5. Soma dos pesos=10; cada peso vale R$ 60; parcelas=R$ 120, R$ 180 e R$ 300. Para prazo com produtividade constante, trabalhadores e tempo tendem a ser inversos; quantidade de serviço e tempo tendem a ser diretos.',
+  'Preço R$ 200 com desconto de 15%: 200×0,85=R$ 170. Se depois houver aumento de 15%, 170×1,15=R$ 195,50, não R$ 200. Percentuais sucessivos operam sobre bases diferentes; calcule pelo fator em vez de somar taxas.',
+  'Quatro pessoas ocupam posições de 1 a 4; Ana não pode estar na posição 1 e Bruno deve vir antes de Caio. Registre as restrições numa tabela, elimine arranjos inviáveis e confira a quarta pessoa. Se duas ordens ainda satisfazem tudo, não afirme uma posição única.',
+  'De “se o serviço está indisponível, não há resposta” (P→Q), observar “há resposta” permite concluir “não está indisponível” apenas se Q foi definido como negação de resposta e a condicional é aceita. Não conclua disponibilidade apenas porque não foi observada falha sem premissas adicionais.',
+  'Na sequência 4, 7, 10, 13, as diferenças são 3; próximo termo pela regra simples é 16. Se as diferenças fossem 2, 4, 6, examine segunda diferença. Valide a hipótese em todas as posições e compare alternativas antes de inventar uma regra complexa.',
+  'Uma pessoa começa voltada ao oeste, vira à esquerda: passa a olhar para o sul; anda 3 quarteirões ao sul; vira à direita: olha para oeste. Registre orientação após cada giro e posição após cada deslocamento. O ponto final não determina sozinho para onde ela está olhando.',
+  'Premissas: todo A é B; x é A. Conclusão: x é B. A forma é válida porque a conclusão não pode ser falsa quando ambas as premissas são verdadeiras. Para invalidar outra forma, procure caso em que premissas sejam verdadeiras e conclusão falsa; isso é mais rigoroso que dizer “parece errado”.',
+];
+
 export const FOUNDATIONAL_CONTENT: Record<string, Lesson> = {
-  ...Object.fromEntries(pt.map((seed, index) => { const id = `portugues-${index}`; return [id, { ...make(id, seed), lessonSections: [{ heading: 'Aprofundamento', body: ptDetails[index] }] }]; })),
-  ...Object.fromEntries(math.map((seed, index) => { const id = `matematica-rl-${index}`; return [id, { ...make(id, seed), lessonSections: [{ heading: 'Aprofundamento', body: mathDetails[index] }] }]; })),
+  ...Object.fromEntries(pt.map((seed, index) => { const id = `portugues-${index}`; const [mechanics, application, examFocus] = ptClassroom[index]; return [id, { ...make(id, seed), lessonSections: [{ heading: 'Aprofundamento', body: ptDetails[index] }, { heading: 'Funcionamento em detalhe', body: mechanics }, { heading: 'Aplicação passo a passo', body: application }, { heading: 'Distinções e armadilhas', body: examFocus }, { heading: 'Exemplo comentado e variação', body: ptSecondExamples[index] }] }]; })),
+  ...Object.fromEntries(math.map((seed, index) => { const id = `matematica-rl-${index}`; const [mechanics, application, examFocus] = mathClassroom[index]; return [id, { ...make(id, seed), lessonSections: [{ heading: 'Aprofundamento', body: mathDetails[index] }, { heading: 'Funcionamento em detalhe', body: mechanics }, { heading: 'Aplicação passo a passo', body: application }, { heading: 'Distinções e armadilhas', body: examFocus }, { heading: 'Exemplo comentado e variação', body: mathSecondExamples[index] }] }]; })),
 };

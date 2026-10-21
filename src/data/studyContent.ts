@@ -5,10 +5,19 @@ import { ENGINEERING_CONTENT } from './studyContentEngineering';
 import { DEVOPS_DATABASE_CONTENT, INFRASTRUCTURE_CONTENT } from './studyContentInfrastructure';
 import { AI_GOV_ENGLISH_CONTENT } from './studyContentDataGov';
 import { IT_LEGISLATION_CONTENT } from './studyContentLegislationIT';
+import { OFFICIAL_WRITING_CONTENT } from './studyContentRedacao';
+import { ORTOGRAFIA_CONTENT } from './studyContentOrtografia';
+import { CRASE_CONTENT } from './studyContentCrase';
+import { PORTUGUES_BLOCO1_CONTENT } from './studyContentPortuguesBloco1';
+import { PORTUGUES_BLOCO2_CONTENT } from './studyContentPortuguesBloco2';
+import { MATEMATICA_RL_COMPLETO_CONTENT } from './studyContentMatematicaCompleto';
+import { MARKDOWN_LESSON_CONTENT } from './studyMarkdownContent';
+import { SYLLABUS } from './syllabus';
 
-type Lesson = Pick<TopicItem, 'summary' | 'lessonSections' | 'example' | 'references' | 'quickQuestions'>;
+type Lesson = Pick<TopicItem, 'summary' | 'markdownContent' | 'lessonSections' | 'example' | 'references' | 'quickQuestions'>;
 
-// Material autoral de revisão. As referências apontam para fontes primárias;
+// Material autoral de revisão; conteúdo curricular atualizado fica nos módulos especializados.
+// As referências apontam para fontes primárias;
 // questões são inéditas para treino e não representam itens oficiais da FCC.
 const agenticContent: Record<string, Lesson> = {
   'ia-agentiva-0': {
@@ -159,8 +168,70 @@ const agenticContent: Record<string, Lesson> = {
   },
 };
 
-export const STUDY_CONTENT: Record<string, Lesson> = {
-  ...agenticContent,
+const agenticClassroom: Record<string, Array<{ heading: string; body: string }>> = {
+  'ia-agentiva-0': [
+    { heading: 'Como ler a saída de um LLM', body: 'Um LLM estima próximos tokens condicionados ao contexto; a geração é sensível à instrução, aos dados e à configuração. O texto pode soar seguro mesmo incorreto. Use fonte oficial, teste ou cálculo independente conforme o tipo de afirmação.' },
+    { heading: 'Exemplo de uso com controle', body: 'Ao pedir teste de cálculo, forneça assinatura, regra, limites e resultado esperado. Execute-o e confirme que falha quando a regra é violada. Não compartilhe tokens, código proprietário ou dados de cidadão sem autorização.' },
+  ],
+  'ia-agentiva-1': [
+    { heading: 'Especificar intenção de forma verificável', body: 'Converta o pedido em objetivo, usuário, entrada, saída, restrição, critério de aceite e casos de erro. Exemplos reduzem interpretação divergente; invariantes esclarecem o que não pode mudar. Registre suposições para revisão.' },
+    { heading: 'Do rascunho ao aceite', body: 'Peça plano antes da implementação, revise arquivos afetados e execute critérios de aceite e regressão. Compare a solução com arquitetura e segurança: compilar não prova que o código implementa a regra correta.' },
+  ],
+  'ia-agentiva-2': [
+    { heading: 'Montar contexto útil', body: 'Inclua tarefa, contexto de negócio, trechos de fonte, formato e critério de avaliação. Remova redundância e dados sensíveis. Se fontes conflitarem ou estiverem incompletas, peça que a ferramenta indique a lacuna em vez de supor.' },
+    { heading: 'Testar a instrução', body: 'Avalie prompts com casos típicos, limites e adversos. Registre modelo, prompt e documentos; compare precisão, completude, consistência, custo e abstenção. Mudança pequena pode alterar resultados.' },
+  ],
+  'ia-agentiva-3': [
+    { heading: 'Escolher integração e permissões', body: 'IDE pode acessar arquivo aberto, seleção e instruções do projeto; CLI pode ler, editar e chamar comandos. Confira diretório, rede, segredos, confirmação e registro de ações antes de habilitar autonomia.' },
+    { heading: 'Revisar a alteração', body: 'Peça mudança pequena, leia diff, confirme arquivos tocados, rode verificações e veja se não houve edição de segredo ou configuração. Limite comandos destrutivos, deploy e escrita fora do workspace.' },
+  ],
+  'ia-agentiva-4': [
+    { heading: 'Ciclo e condição de parada', body: 'Agente pode decompor objetivo, selecionar ferramenta, observar retorno, atualizar plano e repetir. Defina orçamento, número máximo de passos, escopo, política de erro e condição de conclusão para evitar loops.' },
+    { heading: 'Autonomia proporcional ao impacto', body: 'Leitura e rascunho podem ter supervisão menor; escrita persistente exige revisão; publicação, pagamento ou exclusão podem exigir confirmação explícita. Registre chamadas e resultados.' },
+  ],
+  'ia-agentiva-5': [
+    { heading: 'Confinar ações no ambiente', body: 'Use workspace isolado, caminhos normalizados, permissões mínimas, limites de tempo e rede restrita. Valide cada parâmetro; uma instrução ao modelo não substitui os controles do sistema operacional.' },
+    { heading: 'Executar comando com segurança', body: 'Leia conteúdo, origem e caminhos de script antes de executá-lo. Prefira sandbox sem credenciais de produção; para remoção, mostre alvos e peça aprovação. Registre ações sem expor tokens.' },
+  ],
+  'ia-agentiva-6': [
+    { heading: 'Fechar o ciclo com evidência', body: 'Falha de teste só é feedback útil se o teste representa o requisito. O agente pode propor ajuste, mas deve repetir verificação independente sem alterar o teste para fazê-lo passar artificialmente.' },
+    { heading: 'Autocorreção sem regressão', body: 'Após corrigir, rode testes relevantes, regressão, análise e revisão do diff. Limite tentativas; se o modelo modificar requisito ou desativar teste, interrompa e examine a causa.' },
+  ],
+  'ia-agentiva-7': [
+    { heading: 'A tarefa determina a evidência', body: 'Geração deve ser comparada com requisitos; revisão precisa apontar trecho e risco; documentação deve refletir a versão real; depuração precisa de log e reprodução. Separe fatos observados de hipóteses.' },
+    { heading: 'Exemplo de diagnóstico', body: 'Para HTTP 500, forneça rota, log sanitizado e mudança recente. Ordene hipóteses por evidência, reproduza e teste uma causa por vez. Confirme que a correção não enfraquece autorização.' },
+  ],
+  'ia-agentiva-8': [
+    { heading: 'Pipeline RAG e memória', body: 'Ingestão registra fonte e versão; segmentação divide conteúdo; embedding representa segmentos; índice recupera candidatos; filtros aplicam metadados e permissões; modelo sintetiza. Memória de conversa tem finalidade e retenção próprias.' },
+    { heading: 'Avaliar recuperação e resposta', body: 'Meça se trechos corretos são recuperados e se sustentam a resposta. Remova fontes revogadas, teste consultas ambíguas e não revele documento que o usuário não poderia acessar.' },
+  ],
+  'ia-agentiva-9': [
+    { heading: 'Primitivas MCP', body: 'Host contém a aplicação; cliente mantém comunicação; servidor oferece capacidades. Resources fornecem contexto, tools executam operações e prompts oferecem modelos de interação. Recursos disponíveis dependem da implementação e da versão.' },
+    { heading: 'Conexão segura', body: 'Confira origem, identidade e permissões; limite ferramentas, valide entrada e saída e proteja tokens. Para escrita, mostre o efeito esperado e peça confirmação conforme política e impacto.' },
+  ],
+  'ia-agentiva-10': [
+    { heading: 'Contrato da ferramenta', body: 'Defina finalidade, parâmetros tipados, validação, erros, limites e efeitos. Ferramenta de escrita deve verificar identidade e autorização e devolver confirmação rastreável.' },
+    { heading: 'Skill e fluxo especializado', body: 'Skill orienta procedimento; ferramenta executa operação. Divida etapas, identifique dados confiáveis, registre fontes e defina resposta a falhas. Versione instruções com dono, escopo e revisão.' },
+  ],
+  'ia-agentiva-11': [
+    { heading: 'Avaliação representativa', body: 'Inclua casos típicos, raros, limites, adversariais e sem resposta possível. Defina referência, métrica, limiar e custo de erro. Avalie recuperação, geração, segurança, latência e abstenção.' },
+    { heading: 'Validar questão e gabarito', body: 'Confira enunciado, resposta e explicação em fonte técnica ou normativa. Procure ambiguidade, exceção omitida e versão desatualizada. Fluência ou consenso entre modelos não substitui evidência primária.' },
+  ],
+  'ia-agentiva-12': [
+    { heading: 'Dados e propriedade intelectual', body: 'Identifique dados pessoais, segredos, código e licenças antes do envio. Minimize informação; confirme finalidade, base legal, retenção, compartilhamento e contrato. Revise proveniência e licença da saída.' },
+    { heading: 'Governança e responsabilidade', body: 'Defina quem valida, responde a incidente, recebe contestação e toma a decisão final. Avalie viés, segurança, explicabilidade e impacto. Registre decisões sem expor informação protegida.' },
+  ],
+};
+
+const expandedAgenticContent: Record<string, Lesson> = Object.fromEntries(
+  Object.entries(agenticContent).map(([id, lesson]) => [id, {
+    ...lesson,
+    lessonSections: [...(lesson.lessonSections ?? []), ...(agenticClassroom[id] ?? [])],
+  }]),
+);
+
+const rawStudyContent: Record<string, Lesson> = {
+  ...expandedAgenticContent,
   ...FOUNDATIONAL_CONTENT,
   ...INSTITUTIONAL_LAW_CONTENT,
   ...ENGINEERING_CONTENT,
@@ -168,6 +239,62 @@ export const STUDY_CONTENT: Record<string, Lesson> = {
   ...INFRASTRUCTURE_CONTENT,
   ...AI_GOV_ENGLISH_CONTENT,
   ...IT_LEGISLATION_CONTENT,
+  ...OFFICIAL_WRITING_CONTENT,
+  ...ORTOGRAFIA_CONTENT,
+  ...CRASE_CONTENT,
+  ...PORTUGUES_BLOCO1_CONTENT,
+  ...PORTUGUES_BLOCO2_CONTENT,
+  ...MATEMATICA_RL_COMPLETO_CONTENT,
 };
+
+const methodBySubject: Record<string, string> = {
+  portugues: 'Leia o enunciado inteiro antes de classificar a regra. Localize o termo ou trecho decisivo, observe a relação sintática e confirme o efeito de sentido no contexto. Ao avaliar uma reescrita, compare quem pratica a ação, o que é afirmado, a negação, o tempo e a relação entre as ideias.',
+  'matematica-rl': 'Traduza o enunciado para símbolos, variáveis, tabela ou diagrama antes de calcular. Identifique o que é conhecido e o que se pede; escolha a regra a partir da relação descrita, não de palavras isoladas. Ao final, substitua o resultado no problema e verifique sinal, unidade, ordem e plausibilidade.',
+  'legislacao-institucional': 'Leia a norma vigente e identifique o sujeito, a competência, a hipótese de aplicação, o verbo que indica obrigação ou faculdade, os prazos, as exceções e os efeitos. Diferencie regra geral de regra específica e confira a redação consolidada antes de memorizar um número ou atribuição.',
+  'legislacao-ti': 'Na norma, marque quem é responsável, qual dado ou atividade está abrangido, em que condição a regra se aplica, quais direitos ou deveres surgem e que exceções existem. Diferencie conceitos próximos e consulte o texto oficial atualizado; não conclua uma obrigação apenas pelo nome do princípio.',
+  'engenharia-software': 'Identifique o problema que a prática resolve, seus participantes e o artefato ou resultado esperado. Depois examine sequência, critérios de qualidade, limites e dependências. Em questões, separe a definição do conceito de seus benefícios possíveis: um benefício não é garantia automática.',
+  'desenvolvimento-sistemas': 'Rastreie dados e controle: quais são as entradas, quais transformações ocorrem, que estado muda e qual saída é esperada? Compare a implementação com o contrato e teste também valores-limite, erros e permissões. Em código, não confunda sintaxe válida com comportamento correto.',
+  'ia-agentiva': 'Separe capacidade do modelo, contexto fornecido, ferramenta disponível e controle imposto pela aplicação. Siga o fluxo desde o objetivo até a ação e o resultado; identifique onde podem surgir erro, dado não confiável ou efeito externo. Avalie a saída com evidência independente e limite permissões.',
+  devops: 'Siga o fluxo de mudança desde o commit até a entrega: quais etapas são automatizadas, quais verificações bloqueiam avanço e como se detecta falha? Diferencie ferramenta, prática e resultado operacional. Verifique segurança, rastreabilidade, reversão e responsabilidades de cada ambiente.',
+  'banco-dados': 'Comece pela estrutura e pelas regras dos dados; acompanhe como a operação lê ou altera registros e quais garantias são necessárias. Analise cardinalidade, chaves, restrições, concorrência e custo da consulta conforme o assunto. Em exemplos SQL, observe a ordem lógica e o efeito sobre os dados.',
+  'ia-dados': 'Distinga dado de entrada, representação, método aplicado, resultado e critério de avaliação. Pergunte qual problema a técnica resolve, quais pressupostos faz, como pode falhar e que evidência sustenta a conclusão. Não trate correlação, similaridade ou geração plausível como prova de causalidade ou verdade.',
+  seguranca: 'Parta do ativo e da ameaça, identifique a vulnerabilidade ou condição de risco e relacione o controle ao objetivo protegido. Diferencie prevenção, detecção, resposta e recuperação. Ao avaliar uma solução, verifique cobertura, privilégio, configuração, evidência de funcionamento e risco residual.',
+  'so-redes-nuvem': 'Desenhe origem, destino, camadas e dependências da comunicação ou do serviço. Identifique protocolo, componente responsável e ponto de falha. Diferencie o que o sistema operacional, a rede, a aplicação e o provedor de nuvem administram; depois avalie segurança e disponibilidade ponta a ponta.',
+  'governanca-ti': 'Separe governança (direcionar e monitorar) de gestão (planejar e executar) e identifique o nível decisório, os responsáveis, os objetivos e as evidências de resultado. Relacione cada processo ou framework ao problema que trata, sem presumir que nomes semelhantes indiquem o mesmo escopo.',
+  ingles: 'Leia primeiro o título e o contexto para prever o tema; depois localize a informação pedida no texto. Use conectivos, pronomes e palavras de contraste para entender relações. Confirme o sentido de um termo pelo contexto e evite traduzir cada palavra isoladamente quando isso quebrar a ideia.',
+};
+
+const deepenLesson = ([id, lesson]: [string, Lesson]): [string, Lesson] => {
+  // A aula de POO foi escrita seção por seção como modelo completo.
+  if (id === 'desenvolvimento-sistemas-1' || (lesson.lessonSections?.length ?? 0) >= 4) return [id, lesson];
+
+  const subjectId = id.slice(0, id.lastIndexOf('-'));
+  const topicIndex = Number(id.slice(id.lastIndexOf('-') + 1));
+  const topicTitle = SYLLABUS.find((subject) => subject.id === subjectId)?.topics[topicIndex] ?? subjectId.replaceAll('-', ' ');
+  const studyMethod = methodBySubject[subjectId] ?? 'Defina o conceito com precisão, identifique seus elementos e acompanhe como eles se relacionam no cenário apresentado. Compare a situação com o exemplo, verifique condições e limites e justifique cada conclusão com uma regra ou evidência do próprio assunto.';
+  const exampleWalkthrough = lesson.example
+    ? `Use o exemplo prático desta aula como um problema resolvido. Primeiro, destaque os dados e a pergunta. Em seguida, localize a regra ou conceito que se aplica e explique cada passagem até o resultado. Por fim, altere uma condição do cenário e pergunte se a conclusão continuaria válida; essa variação ajuda a distinguir compreensão de memorização.`
+    : `Construa um exemplo simples para o assunto: declare o cenário, aplique a regra passo a passo e explique o resultado. Depois altere uma condição e veja o que muda. Esse teste revela limites e pressupostos que uma definição decorada pode esconder.`;
+  const questionPrompt = lesson.quickQuestions?.[0]?.prompt;
+  const questionPractice = questionPrompt
+    ? `Antes de responder à questão de treino abaixo, diga qual regra ou distinção ela está testando e formule uma justificativa sem consultar o gabarito. Afirmação: “${questionPrompt}” Depois de responder, compare seu fundamento com a explicação e identifique a palavra ou condição decisiva.`
+    : `Crie uma afirmação sobre o assunto e decida se ela é correta. Justifique com uma condição, regra ou evidência; em seguida, transforme a afirmação em incorreta mudando apenas um elemento. Isso treina a identificação de limites e exceções.`;
+  const recallPractice = `Feche o material e explique em voz alta: (1) o que significa “${topicTitle}”; (2) como você aplicaria esse conceito em um caso concreto; (3) qual condição, exceção ou risco faria você rever a solução. Reabra a aula apenas para corrigir os pontos que não conseguiu explicar.`;
+
+  const additions = [
+    { heading: 'Roteiro de raciocínio', body: studyMethod },
+    { heading: 'Como destrinchar o exemplo', body: exampleWalkthrough },
+    { heading: 'Prática de questão', body: questionPractice },
+    { heading: 'Revisão ativa', body: recallPractice },
+  ];
+  return [id, { ...lesson, lessonSections: [...(lesson.lessonSections ?? []), ...additions] }];
+};
+
+export const STUDY_CONTENT: Record<string, Lesson> = Object.fromEntries(
+  Object.entries(rawStudyContent).map(([id, lesson]) => {
+    const [lessonId, deepenedLesson] = deepenLesson([id, lesson]);
+    return [lessonId, { ...deepenedLesson, markdownContent: MARKDOWN_LESSON_CONTENT[id] }];
+  }),
+);
 
 export const STUDY_CONTENT_COUNT = Object.keys(STUDY_CONTENT).length;

@@ -26,7 +26,8 @@ export interface TopicItem {
   incidenceRate: string;
   audioDuration: string;
   summary: string;
-  lessonSections?: Array<{ heading: string; body: string }>;
+  markdownContent?: string;
+  lessonSections?: Array<{ heading: string; body: string; code?: string }>;
   example?: string;
   references?: Array<{ label: string; url: string }>;
   stfJurisprudence?: string;
