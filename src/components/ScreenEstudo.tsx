@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import { EnrichedLesson, TopicItem } from '../types';
 import { AudioSummaryController } from '../utils/audioPlayer';
+import { ScreenWakeLockController } from '../utils/wakeLock';
 import { MarkdownContent } from './MarkdownContent';
 
 interface ScreenEstudoProps {
@@ -63,6 +64,22 @@ export const ScreenEstudo: React.FC<ScreenEstudoProps> = ({
 
     return () => {
       controller.stop();
+    };
+  }, []);
+
+  // Mantém a tela ativa (sem entrar em descanso) enquanto o usuário estiver estudando.
+  useEffect(() => {
+    const wakeLockController = new ScreenWakeLockController();
+    wakeLockController.request();
+
+    const handleVisibilityChange = () => {
+      wakeLockController.reacquireIfVisible();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      wakeLockController.release();
     };
   }, []);
 
