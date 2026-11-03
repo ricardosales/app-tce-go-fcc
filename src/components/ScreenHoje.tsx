@@ -41,6 +41,7 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
   const remainingText = remainingTopics > 0
     ? `Faltam ${remainingTopics} ${remainingTopics === 1 ? 'tópico' : 'tópicos'}`
     : 'Meta diária concluída — continue no seu ritmo!';
+  const recentSessions = completedSessions.slice(0, 5);
 
   return (
     <div className="flex flex-col w-full space-y-4">
@@ -310,12 +311,12 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
       <div className="flex flex-col space-y-2 pt-1">
         <div className="flex items-center justify-between">
           <span className="font-label-code uppercase tracking-wider text-on-surface-variant font-semibold text-[10px]">
-            Últimas sessões ({completedSessions.length})
+            Últimas sessões ({recentSessions.length})
           </span>
           <span className="font-label-code text-secondary text-[11px]">Sessões registradas</span>
         </div>
 
-        {completedSessions.map((session) => (
+        {recentSessions.map((session) => (
           <div
             key={session.id}
             className="bg-surface-container-low/70 rounded-xl p-3 flex items-center justify-between gap-3 opacity-95 hover:opacity-100 transition-opacity border border-slate-100"
