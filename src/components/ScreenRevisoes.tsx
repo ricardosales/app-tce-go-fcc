@@ -24,7 +24,7 @@ export const ScreenRevisoes: React.FC<ScreenRevisoesProps> = ({ reviewQueue, upc
         <span className="material-symbols-outlined text-primary">today</span>
       </div>
       {reviewQueue.length === 0 ? <p className="rounded-xl bg-surface-container-low p-3 text-[12px] text-on-surface-variant">Nenhuma revisão vencida. O app adicionará uma quando chegar a data programada.</p> : <div className="flex flex-col gap-2">
-        {reviewQueue.map((item) => <ReviewCard key={item.id} item={item} actionLabel="Concluir revisão" onReview={(rating) => onReviewItem(item.id, rating)} />)}
+        {reviewQueue.map((item) => <ReviewCard key={item.id} item={item} actionLabel="Concluir revisão" onReview={(rating) => onReviewItem(item.id, rating)} onOpen={() => onSelectTopicForReview(item)} />)}
       </div>}
     </section>
 
@@ -47,11 +47,13 @@ export const ScreenRevisoes: React.FC<ScreenRevisoesProps> = ({ reviewQueue, upc
   </div>
 );
 
-const ReviewCard = ({ item, actionLabel, onReview }: { item: ReviewQueueItem; actionLabel: string; onReview: (rating: 'dificil' | 'medio' | 'facil') => void }) => (
+const ReviewCard = ({ item, actionLabel, onReview, onOpen }: { item: ReviewQueueItem; actionLabel: string; onReview: (rating: 'dificil' | 'medio' | 'facil') => void; onOpen?: () => void }) => (
   <div className="rounded-xl border border-slate-100 bg-surface-container-low p-3">
     <div className="flex items-start justify-between gap-2">
-      <div><div className="text-[10px] font-bold uppercase tracking-wide text-primary">{item.subject} · {item.intervalTag}</div><div className="mt-1 text-[13px] font-semibold text-on-surface">{item.topicTitle}</div><div className="mt-1 text-[11px] text-on-surface-variant">{item.scheduledDate} · {item.durationMinutes} min</div></div>
-      {actionLabel === 'Concluir revisão' ? <div className="flex flex-col gap-1"><span className="text-[9px] font-bold text-on-surface-variant">Como foi?</span><div className="flex gap-1">{(['dificil', 'medio', 'facil'] as const).map((rating) => <button key={rating} onClick={() => onReview(rating)} className="rounded-full bg-white px-2 py-1 text-[9px] font-bold text-primary shadow-sm">{rating === 'dificil' ? 'Difícil' : rating === 'medio' ? 'Médio' : 'Fácil'}</button>)}</div></div> : <button onClick={() => onReview('medio')} className="shrink-0 rounded-full bg-white px-3 py-1.5 text-[10px] font-bold text-primary shadow-sm">{actionLabel}</button>}
+      <div className="min-w-0"><div className="text-[10px] font-bold uppercase tracking-wide text-primary">{item.subject} · {item.intervalTag}</div><div className="mt-1 text-[13px] font-semibold text-on-surface">{item.topicTitle}</div><div className="mt-1 text-[11px] text-on-surface-variant">{item.scheduledDate} · {item.durationMinutes} min</div></div>
+      {onOpen && <button onClick={onOpen} className="shrink-0 rounded-full bg-primary px-3 py-1.5 text-[10px] font-bold text-on-primary shadow-sm">Abrir assunto</button>}
     </div>
+    {onOpen && <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-200 pt-2"><span className="text-[10px] font-semibold text-on-surface-variant">Ou conclua direto:</span><div className="flex gap-1">{(['dificil', 'medio', 'facil'] as const).map((rating) => <button key={rating} onClick={() => onReview(rating)} className="rounded-full bg-white px-2 py-1 text-[9px] font-bold text-primary shadow-sm">{rating === 'dificil' ? 'Difícil' : rating === 'medio' ? 'Médio' : 'Fácil'}</button>)}</div></div>}
+    {!onOpen && <button onClick={() => onReview('medio')} className="mt-3 rounded-full bg-white px-3 py-1.5 text-[10px] font-bold text-primary shadow-sm">{actionLabel}</button>}
   </div>
 );

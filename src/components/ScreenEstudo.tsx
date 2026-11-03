@@ -52,7 +52,6 @@ export const ScreenEstudo: React.FC<ScreenEstudoProps> = ({
   // SRS Rating Selection
   const [selectedSRS, setSelectedSRS] = useState<'dificil' | 'medio' | 'facil'>('facil');
   const [isFinishing, setIsFinishing] = useState(false);
-  const [showCelebrationToast, setShowCelebrationToast] = useState(false);
 
   // Setup Audio Controller
   useEffect(() => {
@@ -208,20 +207,13 @@ Retorne somente JSON com este formato: {"summary":"resumo objetivo, mas didátic
   const isCorrect = selectedAnswer === activeQuestion?.correctAnswer;
 
   const handleCompleteLesson = () => {
+    if (isFinishing) return;
     setIsFinishing(true);
     if (audioControllerRef.current) {
       audioControllerRef.current.stop();
     }
-
-    setTimeout(() => {
-      setIsFinishing(false);
-      setShowCelebrationToast(true);
-      onFinishStudy(selectedSRS);
-      setTimeout(() => {
-        setShowCelebrationToast(false);
-        onBackToToday();
-      }, 2500);
-    }, 800);
+    onFinishStudy(selectedSRS);
+    onBackToToday();
   };
 
   // Format audio seconds into mm:ss
@@ -233,21 +225,6 @@ Retorne somente JSON com este formato: {"summary":"resumo objetivo, mas didátic
 
   return (
     <div className="flex flex-col w-full space-y-4 pb-6">
-      {/* Toast de Celebração */}
-      {showCelebrationToast && (
-        <div className="fixed top-24 left-4 right-4 bg-surface-container-lowest rounded-2xl p-4 shadow-2xl border border-secondary/20 flex items-center gap-3 z-50 animate-bounce">
-          <div className="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-[28px]">verified</span>
-          </div>
-          <div className="flex flex-col min-w-0">
-            <span className="text-[16px] font-bold text-on-surface">Excelente progresso!</span>
-            <span className="text-[12px] text-on-surface-variant">
-              Sessão de {topic.estimatedMinutes} min registrada. Próxima revisão programada.
-            </span>
-          </div>
-        </div>
-      )}
-
       {/* Contextual Breadcrumb & Subject Badge */}
       <div className="flex items-center justify-between gap-1 flex-wrap">
         <div className="flex items-center gap-1.5 text-on-surface-variant text-[11px] font-label-code">

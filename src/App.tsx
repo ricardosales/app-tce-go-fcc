@@ -33,6 +33,7 @@ export default function App() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isPacingOpen, setIsPacingOpen] = useState(false);
   const [inspectedSession, setInspectedSession] = useState<CompletedSessionItem | null>(null);
+  const [showStudyCompleteToast, setShowStudyCompleteToast] = useState(false);
 
   const isNativeApp = Capacitor.isNativePlatform();
 
@@ -88,7 +89,14 @@ export default function App() {
   const handleFinishStudy = (rating: 'dificil' | 'medio' | 'facil') => {
     service.completeSession(rating);
     refreshState();
+    setShowStudyCompleteToast(true);
   };
+
+  useEffect(() => {
+    if (!showStudyCompleteToast) return;
+    const timeout = window.setTimeout(() => setShowStudyCompleteToast(false), 2500);
+    return () => window.clearTimeout(timeout);
+  }, [showStudyCompleteToast]);
 
   const handleReviewItem = (id: string, rating: 'dificil' | 'medio' | 'facil' = 'medio') => {
     service.completeReviewQueueItem(id, rating);
@@ -145,6 +153,18 @@ export default function App() {
             profileName={appState.profileName}
             onOpenProfile={() => setIsProfileOpen(true)}
           />
+
+          {showStudyCompleteToast && (
+            <div role="status" className="fixed top-24 left-4 right-4 z-50 mx-auto flex max-w-xl items-center gap-3 rounded-2xl border border-secondary/20 bg-surface-container-lowest p-4 shadow-2xl">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary-container text-on-secondary-container">
+                <span className="material-symbols-outlined">verified</span>
+              </div>
+              <div>
+                <p className="text-[14px] font-bold text-on-surface">Estudo concluído!</p>
+                <p className="text-[11px] text-on-surface-variant">Sessão registrada e próxima revisão programada.</p>
+              </div>
+            </div>
+          )}
 
           {/* Main Scrollable Screen Content */}
           <main
