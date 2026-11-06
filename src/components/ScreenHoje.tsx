@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TopicItem, ReviewQueueItem, CompletedSessionItem, UserStats } from '../types';
 
 interface ScreenHojeProps {
@@ -8,7 +8,7 @@ interface ScreenHojeProps {
   reviewQueue: ReviewQueueItem[];
   completedSessions: CompletedSessionItem[];
   onStartStudy: (topic: TopicItem) => void;
-  onReviewItem: (id: string) => void;
+  onOpenReview: (item: ReviewQueueItem) => void;
   onViewCompleted: (item: CompletedSessionItem) => void;
 }
 
@@ -19,19 +19,9 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
   reviewQueue,
   completedSessions,
   onStartStudy,
-  onReviewItem,
+  onOpenReview,
   onViewCompleted,
 }) => {
-  const [quickReviewToast, setQuickReviewToast] = useState<string | null>(null);
-
-  const handleQuickReview = (item: ReviewQueueItem) => {
-    onReviewItem(item.id);
-    setQuickReviewToast(`Revisão de "${item.subject}" concluída.`);
-    setTimeout(() => {
-      setQuickReviewToast(null);
-    }, 3000);
-  };
-
   const progressPercent = Math.min(
     100,
     Math.round((stats.metaDailyDone / Math.max(1, stats.metaDailyTotal)) * 100)
@@ -45,14 +35,6 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
 
   return (
     <div className="flex flex-col w-full space-y-4">
-      {/* Toast Notification */}
-      {quickReviewToast && (
-        <div className="fixed top-24 left-4 right-4 z-50 bg-secondary text-on-secondary px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 animate-bounce">
-          <span className="material-symbols-outlined text-[20px]">check_circle</span>
-          <span className="text-xs font-semibold">{quickReviewToast}</span>
-        </div>
-      )}
-
       {/* Saudação e Boas-vindas */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col">
@@ -295,7 +277,7 @@ export const ScreenHoje: React.FC<ScreenHojeProps> = ({
                   </div>
                 </div>
                 <button
-                  onClick={() => handleQuickReview(item)}
+                  onClick={() => onOpenReview(item)}
                   className="shrink-0 px-3 py-1.5 bg-surface-container text-primary hover:bg-primary hover:text-on-primary text-[12px] font-semibold rounded-full transition-colors flex items-center gap-1 shadow-xs cursor-pointer active:scale-95"
                 >
                   <span>Revisar</span>

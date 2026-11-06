@@ -12,7 +12,7 @@ import { ModalProfileAndEdital } from './components/ModalProfileAndEdital';
 import { ModalWelcome } from './components/ModalWelcome';
 import { ModalPacing } from './components/ModalPacing';
 import { ThemeMode } from './components/ThemeSelector';
-import { CompletedSessionItem, EnrichedLesson, TopicItem } from './types';
+import { CompletedSessionItem, EnrichedLesson, ReviewQueueItem, TopicItem } from './types';
 import { SYLLABUS } from './data/syllabus';
 import { STUDY_CONTENT } from './data/studyContent';
 import { DRIVE_PDF_REFERENCES } from './data/drivePdfReferences';
@@ -84,6 +84,15 @@ export default function App() {
     });
     refreshState();
     setActiveTab('estudo');
+  };
+
+  const handleOpenReviewTopic = (item: ReviewQueueItem) => {
+    const subject = SYLLABUS.find((entry) => entry.name === item.subject);
+    if (!subject) return;
+    const index = subject.topics.indexOf(item.topicTitle);
+    if (index >= 0) {
+      handleStartCurriculumTopic(subject.name, subject.id, item.topicTitle, `${subject.id}-${index}`);
+    }
   };
 
   const handleFinishStudy = (rating: 'dificil' | 'medio' | 'facil') => {
@@ -183,7 +192,7 @@ export default function App() {
                 reviewQueue={appState.reviewQueue}
                 completedSessions={appState.completedSessions}
                 onStartStudy={handleStartStudy}
-                onReviewItem={handleReviewItem}
+                onOpenReview={handleOpenReviewTopic}
                 onViewCompleted={(session) => setInspectedSession(session)}
               />
             )}
@@ -216,16 +225,7 @@ export default function App() {
                 onReviewItem={handleReviewItem}
                 onAnticipateReviews={handleAnticipateReviews}
                 onOpenPacingModal={() => setIsPacingOpen(true)}
-                onSelectTopicForReview={(item) => {
-                  const subject = SYLLABUS.find((entry) => entry.name === item.subject);
-                  if (!subject) return;
-                  const index = subject.topics.indexOf(item.topicTitle);
-                  if (index >= 0) {
-                    handleStartCurriculumTopic(subject.name, subject.id, item.topicTitle, `${subject.id}-${index}`);
-                  } else {
-                    setActiveTab('estudo');
-                  }
-                }}
+                onSelectTopicForReview={handleOpenReviewTopic}
               />
             )}
 
